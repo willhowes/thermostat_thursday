@@ -76,4 +76,28 @@ describe ('Thermostat', function() {
 
   });
 
+  describe('.reset', function(){
+    it('resets temperature to 20', function(){
+      thermostat.reset();
+      expect(thermostat.temperature).toEqual(20);
+    });
+
+  });
+
+  describe('.energyUse', function(){
+    it('shows low usage if temperature < 18', function(){
+      thermostat.temperature = 17;
+      expect(thermostat.calculateEnergyUse()).toEqual('low-usage')
+    });
+    it('shows medium usage if temperature is between 18 and 24 inclusive', function(){
+      thermostat.temperature = 22;
+      expect(thermostat.calculateEnergyUse()).toEqual('medium-usage')
+    });
+    it('shows high usage if temperature > 24', function(){
+      thermostat.powerSaveOff;
+      thermostat.temperature = 30;
+      expect(thermostat.calculateEnergyUse()).toEqual('high-usage')
+    });
+  });
+
 });
