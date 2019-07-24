@@ -1,3 +1,5 @@
+'use strict';
+
 describe ('Thermostat', function() {
 
   var thermostat;
@@ -10,7 +12,7 @@ describe ('Thermostat', function() {
   });
 
   it('minimum temperature is 10 degrees', function() {
-    expect(thermostat.minTemp).toEqual(10)
+    expect(thermostat.MIN_TEMP).toEqual(10)
 
   })
 
@@ -25,10 +27,10 @@ describe ('Thermostat', function() {
 
     });
 
-    it('raises error when temperature is higher than maxTemp', function() {
+    it('stop at maxTemp when temperature is at maxTemp', function() {
       thermostat.temperature = thermostat.maxTemp
-      expect(function() {thermostat.up()}).toThrowError('Max temperature reached')
-
+      thermostat.up()
+      expect(thermostat.temperature).toEqual(thermostat.maxTemp)
     })
   });
 
@@ -39,22 +41,23 @@ describe ('Thermostat', function() {
 
     });
 
-    it('raises an error when temperature hits 9 degrees', function() {
-      for (var i = 1; i <= 10; i++ ) {
+    it('stops decreasing when temp hits 10 degrees', function() {
+      for (var i = 1; i <= 11; i++ ) {
         thermostat.down();
       }
-      expect(function(){thermostat.down();}).toThrowError('Minimum temperature reached');
+      expect(thermostat.temperature).toEqual(thermostat.MIN_TEMP);
     });
-
   });
 
   describe('.powerSaveOn', function() {
     it('Changes maxTemp to 25', function(){
+      thermostat.powerSaveOff();
       thermostat.powerSaveOn();
       expect(thermostat.maxTemp).toEqual(25);
     })
 
     it('Changes isPowerSave to true', function() {
+      thermostat.powerSaveOff();
       thermostat.powerSaveOn();
       expect(thermostat.isPowerSave).toEqual(true);
 
@@ -64,11 +67,13 @@ describe ('Thermostat', function() {
 
   describe('.powerSaveOff', function(){
     it('Changes maxTemp to 32', function(){
+      thermostat.powerSaveOn();
       thermostat.powerSaveOff();
       expect(thermostat.maxTemp).toEqual(32);
     });
 
     it('Changes isPowerSave to false', function() {
+      thermostat.powerSaveOn();
       thermostat.powerSaveOff();
       expect(thermostat.isPowerSave).toEqual(false);
 
@@ -78,6 +83,7 @@ describe ('Thermostat', function() {
 
   describe('.reset', function(){
     it('resets temperature to 20', function(){
+      this.temperature = 11;
       thermostat.reset();
       expect(thermostat.temperature).toEqual(20);
     });
