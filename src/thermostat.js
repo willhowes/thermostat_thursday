@@ -39,7 +39,7 @@ Thermostat.prototype.reset = function() {
   this.temperature = this.DEFAULT_TEMP;
 };
 
-Thermostat.prototype.calculateEnergyUse = function() {
+Thermostat.prototype.energyUse = function() {
   if(this.temperature < this.LOW_USAGE_THRESHOLD) {
     return "low-usage";
   }else if(this.temperature >= this.MAX_TEMP_PSM_ON) {
