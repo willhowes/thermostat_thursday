@@ -3,7 +3,6 @@ $( document ).ready(function() {
 
   $( "#up" ).click(function() {
   thermostat.up();
-  // $("#temperature").html(thermostat.temperature)
   updateTemperature();
 });
 
@@ -14,6 +13,18 @@ $( document ).ready(function() {
 
   $( "#reset" ).click(function() {
   thermostat.reset();
+  updateTemperature();
+  });
+
+  $( "#power_save_on" ).click(function() {
+  thermostat.powerSaveOn();
+  $('#power-saving-status').text('on')
+  updateTemperature();
+  });
+
+  $( "#power_save_off" ).click(function() {
+  thermostat.powerSaveOff();
+  $('#power-saving-status').text('off')
   updateTemperature();
   });
 
