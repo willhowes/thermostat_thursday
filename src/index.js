@@ -1,16 +1,16 @@
 $( document ).ready(function() {
-  thermostat = new Thermostat
+  var thermostat = new Thermostat
 
   $( "#up" ).click(function() {
   thermostat.up();
   // $("#temperature").html(thermostat.temperature)
-  console.log(thermostat.temperature)
+  updateTemperature();
 });
 
   $( "#down" ).click(function() {
   thermostat.down();
   // $("#temperature").html(thermostat.temperature)
-  console.log(thermostat.temperature)
+  updateTemperature();
   });
 
   $("button").click(function() {
@@ -18,5 +18,9 @@ $( document ).ready(function() {
   })
 
   $("#temperature").html(thermostat.temperature)
+
+  function updateTemperature() {
+    $('#temperature').text(thermostat.temperature);
+  }
 
 });
